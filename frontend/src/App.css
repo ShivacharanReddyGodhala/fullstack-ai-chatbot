@@ -161,3 +161,26 @@
     opacity: 0.45;
   }
 }
+
+.error-message p {
+  margin: 0 0 10px;
+}
+
+.retry-button {
+  padding: 9px 16px;
+  background: #b91c1c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.retry-button:hover:not(:disabled) {
+  background: #dc2626;
+}
+
+.retry-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
