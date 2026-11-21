@@ -8,6 +8,11 @@ type Message = {
   content: string
 }
 
+type HistoryMessage = {
+  role: 'user' | 'assistant'
+  content: string
+}
+
 type ChatResponse = {
   user_message: string
   reply: string
@@ -36,6 +41,15 @@ function App() {
 
     if (!text || loading) return
 
+    // Prepare previous conversation messages for FastAPI
+    const history: HistoryMessage[] = messages
+      .filter((message) => message.id !== 'welcome')
+      .slice(-20)
+      .map((message) => ({
+        role: message.role,
+        content: message.content
+      }))
+      console.log('History being sent:', history)
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: 'user',
@@ -54,7 +68,8 @@ function App() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          message: text
+          message: text,
+          history: history
         })
       })
 
