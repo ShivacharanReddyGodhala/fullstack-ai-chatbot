@@ -1,10 +1,21 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from ollama import Client, ResponseError
 import httpx
 
 # Create the FastAPI application
 app = FastAPI(title="Full Stack AI Chatbot API")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173"
+    ],
+    allow_credentials=False,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"]
+)
 
 # Connect to our locally running Ollama server
 ollama_client = Client(
